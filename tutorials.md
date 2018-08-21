@@ -5,26 +5,34 @@
 
 ## 训练第一步：拟合曲线到合成数据
 
-This tutorial demonstrates building a small toy model completely from scratch using TensorFlow.js operations. We will fit a curve to some synthetic data that we generate using a polynomial function.
+本教程演示了如何使用TensorFlow.js运算符重头构建小型玩具模型. 我们将使用多项式函数生成一些合成数据的曲线.
 
-Training on images — Recognizing Handwritten Digits with a Convolutional Neural Network
-This tutorial shows how to build a convolutional neural network to recognize handwritten digits in images (MNIST). We will use the TensorFlow.js layers API to construct, train, and evaluate the model.
+## 图像训练 — 用卷积神经网络识别手写数字
 
-Transfer learning - Train a neural network to predict from webcam data
-This tutorial explains how to train a neural network to make predictions from webcam data. We'll use those predictions to play Pac-Man!
+本教程介绍如何构建卷积神经网络以识别图像（MNIST）中的手写数字.我们将使用TensorFlow.js图层API来构建，训练和评估模型.
 
-How to import a Keras Model into TensorFlow.js
-This tutorial explains how to convert and serve an existing Keras model to run in the browser.
+## 迁移学习 - 训练神经网络以预测网络摄像头数据
 
-Saving and Loading tf.Model
-This tutorial explains how to save tf.Models to various destinations such as the web browser's Local Storage and load them back.
+本教程将介绍如何训练神经网络以从网络摄像头数据进行预测.我们将使用这些预测来玩Pac-Man！
 
-How to import a TensorFlow SavedModel into TensorFlow.js
-This tutorial explains how to convert and serve an existing TensorFlow SavedModel to run in the browser.
+## 如何将Keras模型导入TensorFlow.js
 
-How to define a custom WebGL operation
-This tutorial explains how to create a custom WebGL operation that can be used alongside other Tensorflow.js operations.
+本教程介绍如何转换和提供现有Keras模型以在浏览器中运行.
 
-Guides
-TensorFlow.js Layers API for Keras Users
-This guide explains the similarities and differences between the Layers API of TensorFlow.js and Keras.
+## 保存并加载tf.Model
+
+本教程介绍如何将tf.Model保存到各种地方，例如Web浏览器的本地存储并将其加载回来.
+
+## 如何将TensorFlow SavedModel导入TensorFlow.js
+
+本教程介绍如何转换和提供现有的TensorFlow SavedModel以在浏览器中运行.
+
+## 如何定义自定义WebGL操作
+
+本教程介绍如何创建可与其他Tensorflow.js操作一起使用的自定义WebGL操作.
+
+#指南
+
+## 用于Keras用户的TensorFlow.js层API
+
+本指南解释了TensorFlow.js和Keras的Layers API之间的异同。
