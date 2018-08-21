@@ -37,7 +37,7 @@
 
 ## 如何定义自定义WebGL操作
 
-本教程介绍如何创建可与其他Tensorflow.js操作一起使用的自定义WebGL操作.
+本教程介绍如何创建可与其他Tensorflow.js运算符一起使用的自定义WebGL操作.
 
 
 # 指南
