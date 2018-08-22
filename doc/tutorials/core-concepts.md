@@ -1,15 +1,15 @@
-## Core Concepts in TensorFlow.js
+## TensorFlow.js中的核心概念
 
-TensorFlow.js is an open source WebGL-accelerated JavaScript library for machine intelligence. It brings highly performant machine learning building blocks to your fingertips, allowing you to train neural networks in a browser or run pre-trained models in inference mode. See Getting Started for a guide on installing/configuring TensorFlow.js.
+TensorFlow.js 是一个用户机器智能的开源WEBGL加速JavaScript库. 它为您带来了高性能的机器学习构建模块, 允许您在浏览器中训练神经网络或在推断模式下运行预先训练的模型. 有关安装/配置TensorFlow.js的指南，请参阅 Getting Started。
 
-TensorFlow.js provides low-level building blocks for machine learning as well as a high-level, Keras-inspired API for constructing neural networks. Let's take a look at some of the core components of the library.
+TensorFlow.js为机器学习提供了低级和高级别的构建块, 基于Keras的API，用于构建神经网络.我们来看看该库的一些核心组件.
 
 
-## Tensors
+## 张量
 
-The central unit of data in TensorFlow.js is the tensor: a set of numerical values shaped into an array of one or more dimensions. A Tensor instance has a shape attribute that defines the array shape (i.e., how many values are in each dimension of the array).
+TensorFlow.js中的核心是张量: 一组数值，形状为一个或多个维度的数组. Tensor实例具有定义数组形状的形状属性（即，数组的每个维度中有多少个值）.
 
-The primary Tensor constructor is the tf.tensor function:
+Tensor的主要构造函数是tf.tensor函数：
 
 ```
 // 2x3 Tensor
@@ -27,9 +27,11 @@ b.print();
 
 ```
 
-However, for constructing low-rank tensors, we recommend using the following functions to enhance code readability: tf.scalar, tf.tensor1d, tf.tensor2d, tf.tensor3d and tf.tensor4d.
+但是，为了构建低秩张量，我们建议使用以下函数来增强代码可读性: 
 
-The following example creates an identical tensor to the one above using tf.tensor2d:
+tf.scalar, tf.tensor1d, tf.tensor2d, tf.tensor3d and tf.tensor4d.
+
+以下示例使用tf.tensor2d创建与上面相同的张量：
 
 ```
 const c = tf.tensor2d([[1.0, 2.0, 3.0], [10.0, 20.0, 30.0]]);
@@ -39,7 +41,7 @@ c.print();
 
 ```
 
-TensorFlow.js also provides convenience functions for creating tensors with all values set to 0 (tf.zeros) or all values set to 1 (tf.ones):
+TensorFlow.js还提供了方便函数，用于创建所有值设置为0（tf.zeros）或所有值设置为1（tf.ones）的张量：
 
 ```
 // 3x5 Tensor with all values set to 0
@@ -50,11 +52,11 @@ const zeros = tf.zeros([3, 5]);
 
 ```
 
-In TensorFlow.js, tensors are immutable; once created, you cannot change their values. Instead you perform operations on them that generate new tensors.
+在TensorFlow.js中，张量是不可变的;一旦创建，您就无法更改其值.而是对它们执行生成新张量的操作.
 
-## Variables
+## 变量
 
-Variables are initialized with a tensor of values. Unlike Tensors, however, their values are mutable. You can assign a new tensor to an existing variable using the assign method:
+变量用一个张量的值初始化.然而,与张量不同,其值是可变的. 您可以使用assign方法为现有变量指定新的张量:
 
 ```
 const initialValues = tf.zeros([5]);
@@ -67,13 +69,13 @@ biases.print(); // output: [0, 1, 0, 1, 0]
 
 ```
 
-Variables are primarily used to store and then update values during model training.
+变量主要用于在模型训练期间存储然后更新值。
 
-## Operations (Ops)
+## 操作 (Ops)
 
-While tensors allow you to store data, operations (ops) allow you to manipulate that data. TensorFlow.js provides a wide variety of ops suitable for linear algebra and machine learning that can be performed on tensors. Because tensors are immutable, these ops do not change their values; instead, ops return new tensors.
+张量允许您存储数据, operations（ops）允许您操作该数据. TensorFlow.js提供了多种适用于线性代数和机器学习的运算，可以在张量上执行. 因为张量是不可变的, 这些操作不会改变它们的价值观;相反，ops会返回新的张量.
 
-Available ops include unary ops such as square:
+可用的操作包括一元操作，如square:
 
 ```
 
@@ -85,7 +87,7 @@ d_squared.print();
 
 ```
 
-And binary ops such as add, sub, and mul:
+和二元操作，如add，sub和mul:
 
 ```
 
@@ -99,7 +101,7 @@ e_plus_f.print();
 
 ```
 
-TensorFlow.js has a chainable API; you can call ops on the result of ops:
+TensorFlow.js有一个支持链式调用的接口;你可以在ops的结果上调用ops：
 
 ```
 const sq_sum = e.add(f).square();
@@ -113,11 +115,11 @@ const sq_sum = tf.square(tf.add(e, f));
 
 ```
 
-## Models and Layers
+## 模型和层
 
-Conceptually, a model is a function that given some input will produce some desired output.
+从概念上讲，模型是一种函数，给定一些输入将产生一些所需的输出.
 
-In TensorFlow.js there are two ways to create models. You can use ops directly to represent the work the model does. For example:
+在TensorFlow.js中，有两种方法可以创建模型. 您可以直接使用ops来表示模型所做的工作. 例如:
 
 ```
 
@@ -147,7 +149,7 @@ result.print() // Output: 24
 
 ```
 
-You can also use the high-level API tf.model to construct a model out of layers, which are a popular abstraction in deep learning. The following code constructs a tf.sequential model:
+您还可以使用高级API tf.model来构建模型层,这是深度学习中流行的抽象.以下代码构造了一个tf.sequential模型:
 
 
 ```
@@ -167,17 +169,17 @@ model.fit({x: data, y: labels});
 
 ```
 
-There are many different types of layers available in TensorFlow.js. A few examples include tf.layers.simpleRNN, tf.layers.gru, and tf.layers.lstm.
+TensorFlow.js中有许多不同类型的层 一些示例包括tf.layers.simpleRNN，tf.layers.gru和tf.layers.lstm.
 
-## Memory Management: dispose and tf.tidy
+## 内存管理：dispose和tf.tidy
 
-Because TensorFlow.js uses the GPU to accelerate math operations, it's necessary to manage GPU memory when working with tensors and variables.
+由于TensorFlow.js使用GPU来加速数学运算，因此在使用张量和变量时需要管理GPU内存.
 
-TensorFlow.js provide two functions to help with this: dispose and tf.tidy.
+TensorFlow.js提供了两个函数来帮助解决这个问题：dispose和tf.tidy.
 
 ## dispose
 
-You can call dispose on a tensor or variable to purge it and free up its GPU memory:
+您可以在张量或变量上调用dispose来清除它并释放其GPU内存:
 
 ```
 
@@ -191,9 +193,9 @@ x_squared.dispose();
 
 ## tf.tidy
 
-Using dispose can be cumbersome when doing a lot of tensor operations. TensorFlow.js provides another function, tf.tidy, that plays a similar role to regular scopes in JavaScript, but for GPU-backed tensors.
+在进行大量张量操作时，使用dispose会很麻烦.TensorFlow.js提供了另一个功能, tf.tidy, 它与JavaScript中的常规范围起着类似的作用,但作用于GPU上的张量.
 
-tf.tidy executes a function and purges any intermediate tensors created, freeing up their GPU memory. It does not purge the return value of the inner function.
+tf.tidy执行一个函数并清除所创建的任何中间张量，释放它们的GPU内存.它不会清除内部函数的返回值.
 
 ```
 
@@ -215,20 +217,21 @@ average.print() // Output: 3.5
 
 ```
 
-Using tf.tidy will help prevent memory leaks in your application. It can also be used to more carefully control when memory is reclaimed.
+使用tf.tidy将有助于防止应用程序中的内存泄漏. 它还可以用于更加谨慎地控制何时回收内存.
 
 
-## Two important notes
+## 两个重要的注释
 
-The function passed to tf.tidy should be synchronous and also not return a Promise. We suggest keeping code that updates the UI or makes remote requests outside of tf.tidy.
+传递给tf.tidy的函数应该是同步的，也不会返回Promise. 我们建议保留更新UI的代码或在tf.tidy之外发出远程请求.
 
-tf.tidy will not clean up variables. Variables typically last through the entire lifecycle of a machine learning model, so TensorFlow.js doesn't clean them up even if they are created in a tidy; however, you can call dispose on them manually.
+tf.tidy不会清理变量. 变量通常持续到机器学习模型的整个生命周期, 所以即使它们是整洁的TensorFlow.js也不会清理它们;但是，您可以手动调用dispose清理它们.
 
-## Additional Resources
+## 其他资源
 
-See the TensorFlow.js API reference for comprehensive documentation of the library.
+有关库的综合文档，请参阅TensorFlow.js API参考。
 
-For a more in-depth look at machine learning fundamentals, see the following resources:
+要更深入地了解机器学习基础知识，请参阅以下资源：
 
-Machine Learning Crash Course (Note: this course's exercises use TensorFlow's Python API. However, the core machine learning concepts it teaches can be applied in equivalent fashion using TensorFlow.js.)
-Machine Learning Glossary
+机器学习速成课程(注意：本课程的练习使用TensorFlow的Python API. 但是，它所教授的核心机器学习概念可以使用TensorFlow.js以相同的方式应用.)
+
+机器学习术语表
