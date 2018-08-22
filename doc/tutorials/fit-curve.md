@@ -1,8 +1,10 @@
-Training First Steps: Fitting a Curve to Synthetic Data
-In this tutorial, we'll use TensorFlow.js to fit a curve to a synthetic dataset. Given some data generated using a polynomial function with some noise added, we'll train a model to discover the coefficients used to generate the data.
+## 训练第一步：拟合曲线到合成数据
 
-Prerequisites
-This tutorial assumes familiarity with the fundamental building blocks of TensorFlow.js introduced in Core Concepts in TensorFlow.js: tensors, variables, and ops. We recommend completing Core Concepts before doing this tutorial.
+本教程演示了如何使用TensorFlow.js运算符重头构建小型玩具模型. 我们将使用多项式函数生成一些合成数据的曲线.
+
+## 先决条件
+
+本教程假设您熟悉TensorFlow.js的基本构建块介绍在[TensorFlow.js中的核心概念](./core-concepts.md):张量,变量和操作.我们建议在完成本教程之前完成核心概念。
 
 Running the Code
 This tutorial focuses on the TensorFlow.js code used to build the model and learn its coefficients. The full code for this tutorial (including the data-generation and chart-plotting code) can be found here.
