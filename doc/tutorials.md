@@ -1,6 +1,6 @@
 # 教程
 
-## TensorFlow.js中的核心概念
+## [TensorFlow.js中的核心概念](./tutorials/core-concepts.md)
 
 了解TensorFlow.js中的核心概念例如张量,运算符,模型,层和训练.还要学习一些关于内存管理和编写整洁代码的技巧.
 
