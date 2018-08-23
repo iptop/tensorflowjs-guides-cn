@@ -29,6 +29,8 @@ $ yarn watch
 
 我们的合成数据集由x坐标和y坐标组成，在笛卡尔平面上绘制时如下所示:
 
+![avatar](../../img/fit_curve_data.png)
+
 Input data scatterplot. Data approximates a cubic function with a local minimum around (-0.6, 0) and a local maximum around (0.4, 1)
 This data was generated using a cubic function of the format y = ax3 + bx2 + cx + d.
 
