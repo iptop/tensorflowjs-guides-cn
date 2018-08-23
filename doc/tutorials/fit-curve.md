@@ -6,14 +6,16 @@
 
 本教程假设您熟悉TensorFlow.js的基本构建块介绍在[TensorFlow.js中的核心概念](./core-concepts.md):张量,变量和操作.我们建议在完成本教程之前完成核心概念。
 
-Running the Code
-This tutorial focuses on the TensorFlow.js code used to build the model and learn its coefficients. The full code for this tutorial (including the data-generation and chart-plotting code) can be found here.
+## 运行代码
+本教程重点介绍用于构建模型和其学习率的TensorFlow.js代码.可以在[此处](https://github.com/tensorflow/tfjs-examples/tree/master/polynomial-regression-core)找到本教程的完整代码（包括数据生成和图表绘图代码）.
 
-To run the code locally, you need the following dependencies installed:
+要在本地运行代码，需要安装以下依赖项:
 
 Node.js version 8.9 or higher
+
 Yarn or NPM CLI
-These instructions use Yarn, but if you are familiar with NPM CLI and prefer to use that instead it will still work.
+
+这些说明使用Yarn，但是如果您熟悉NPM CLI并且更喜欢使用它，那么它仍然可以使用.
 
 $ git clone https://github.com/tensorflow/tfjs-examples
 $ cd tfjs-examples/polynomial-regression-core
