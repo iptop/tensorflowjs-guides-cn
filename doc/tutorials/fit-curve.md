@@ -172,7 +172,7 @@ minimize需要一个能完成两件事的函数:
 
 一旦程序完成运行, 我们可以得到变量a，b，c和d的最终值，并用它们绘制曲线:
 
-![avatar](../../img/../images/fit_curve_learned.png)
+![avatar](../../img/fit_curve_learned.png)
 
 结果比我们最初使用系数的随机值绘制的曲线好得多.
 
