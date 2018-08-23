@@ -7,6 +7,7 @@
 本教程假设您熟悉TensorFlow.js的基本构建块介绍在[TensorFlow.js中的核心概念](./core-concepts.md):张量,变量和操作.我们建议在完成本教程之前完成核心概念。
 
 ## 运行代码
+
 本教程重点介绍用于构建模型和其学习率的TensorFlow.js代码.可以在[此处](https://github.com/tensorflow/tfjs-examples/tree/master/polynomial-regression-core)找到本教程的完整代码（包括数据生成和图表绘图代码）.
 
 要在本地运行代码，需要安装以下依赖项:
@@ -16,14 +17,17 @@ Yarn or NPM CLI
 
 这些说明使用Yarn，但是如果您熟悉NPM CLI并且更喜欢使用它，那么它仍然可以使用.
 
+```
 $ git clone https://github.com/tensorflow/tfjs-examples
 $ cd tfjs-examples/polynomial-regression-core
 $ yarn
 $ yarn watch
-The tfjs-examples/polynomial-regression-core directory above is completely standalone so you can copy it to start your own project.
+```
+上面的tfjs-examples/polynomial-regression-core目录是完全独立的，因此您可以复制它以启动您自己的项目.
 
-Input Data
-Our synthetic data set is composed of x- and y-coordinates that look as follows when plotted on a Cartesian plane:
+## 输入数据
+
+我们的合成数据集由x坐标和y坐标组成，在笛卡尔平面上绘制时如下所示:
 
 Input data scatterplot. Data approximates a cubic function with a local minimum around (-0.6, 0) and a local maximum around (0.4, 1)
 This data was generated using a cubic function of the format y = ax3 + bx2 + cx + d.
