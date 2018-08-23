@@ -75,29 +75,34 @@ function predict(x) {
 
 ## 步骤 3: 训练模型
 
-* 我们的最后一步是训练模型以学习系数的良好值.为了训练我们的模型，我们需要定义三件事:
+我们的最后一步是训练模型以学习系数的良好值.为了训练我们的模型，我们需要定义三件事:
 
 * 损失函数,它测量给定多项式与数据的拟合程度.损失值越低,多项式拟合数据越好.
 
 * 优化器, 它实现了一种算法，用于根据损失函数的输出修改我们的系数值. 优化器的目标是最小化损失函数的输出值.
 
-A training loop, which will iteratively run the optimizer to minimize loss.
+* 训练循环，它将迭代运行优化器以最小化损失.
 
-Define the Loss Function
-For this tutorial, we'll use mean squared error (MSE) as our loss function. MSE is calculated by squaring the difference between the actual y value and the predicted y value for each x value in our data set, and then taking the mean of all the resulting terms.
+## 定义损失函数
 
-We can define a MSE loss function in TensorFlow.js as follows:
+对于本教程，我们将使用均方误差（MSE）作为我们的损失函数.通过对我们数据集中每个x值的实际y值和预测y值之间的差值求平方来计算MSE, 然后取所有结果的算术平均值.
 
+我们可以在TensorFlow.js中定义MSE损失函数，如下所示:
+
+```
 function loss(predictions, labels) {
   // Subtract our labels (actual values) from predictions, square the results,
   // and take the mean.
   const meanSquareError = predictions.sub(labels).square().mean();
   return meanSquareError;
 }
-Define the Optimizer
-For our optimizer, we'll use Stochastic Gradient Descent (SGD). SGD works by taking the gradient of a random point in our data set and using its value to inform whether to increase or decrease the value of our model coefficients.
+```
 
-TensorFlow.js provides a convenience function for performing SGD, so that you don't have to worry about performing all these mathematical operations yourself. tf.train.sgd takes as input a desired learning rate, and returns an SGDOptimizer object, which can be invoked to optimize the value of the loss function.
+## 定义优化器
+
+对于优化器, 我们将使用随机梯度下降（SGD）. SGD通过获取数据集中随机点的梯度并使用其值来通知是否增加或减少模型系数的值来工作.
+
+TensorFlow.js提供了执行SGD的便利功能, 这样您就不必担心自己执行所有这些数学运算. tf.train.sgd 将所需的学习率作为输入, 并返回一个SGDOptimizer对象,可以调用它来优化损失函数的值.
 
 The learning rate controls how big the model's adjustments will be when improving its predictions. A low learning rate will make the learning process run more slowly (more training iterations needed to learn good coefficients), while a high learning rate will speed up learning but might result in the model oscillating around the right values, always overcorrecting.
 
