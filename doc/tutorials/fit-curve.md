@@ -160,23 +160,27 @@ for (let iter = 0; iter < numIterations; iter++) {
 
 minimize需要一个能完成两件事的函数:
 
- 1. It predicts y values (predYs) for all the x values using the predict model function we defined earlier in Step 2.
+ 1. 它使用我们之前在步骤2中定义的预测模型函数预测所有x值的y值（predYs）.
  
- 2. It returns the mean squared error loss for those predictions using the loss function we defined earlier in Define the Loss Function.
+ 2. 它使用我们之前在定义损失函数中定义的损失函数返回那些预测的均方误差损失.
 
-minimize then automatically adjusts any Variables used by this function (here, the coefficients a, b, c, and d) in order to minimize the return value (our loss).
+然后minimize自动调整此函数使用的任何变量（此处为系数a，b，c和d），以便最小化返回值（我们的损失）
 
-After running our training loop, a, b, c, and d will contain the coefficient values learned by the model after 75 iterations of SGD.
+在运行我们的训练循环之后，a，b，c和d将包含在75次SGD迭代之后由模型学习的系数值.
 
-See the Results!
-Once the program finishes running, we can take the final values of our variables a, b, c, and d, and use them to plot a curve:
+## 查看结果!
 
-A cubic curve that nicely approximates the shape of our data
-The result is much better than the curve we originally plotted using random values for the coefficient.
+一旦程序完成运行, 我们可以得到变量a，b，c和d的最终值，并用它们绘制曲线:
 
-Additional Resources
-See Core Concepts in TensorFlow.js for an introduction to the core building blocks in TensorFlow.js: tensors, variables, and ops.
+![avatar](../../img/../images/fit_curve_learned.png)
 
-See Descending into ML in Machine Learning Crash Course for a more in-depth introduction to machine learning loss
+结果比我们最初使用系数的随机值绘制的曲线好得多.
 
-See Reducing Loss in Machine Learning Crash Course for a deeper dive into gradient descent and SGD.
+## 其他资源
+
+ * 有关TensorFlow.js中核心构建块的介绍，请参阅TensorFlow.js的核心概念：张量，变量和操作.
+
+ * 请参阅Machine Learning Crash Course中的Descending into ML有关机器学习损失的更深入介绍.
+ 
+ * 请参阅Machine Learning Crash Course中的Reducing Loss深入了解梯度下降和SGD.
+
