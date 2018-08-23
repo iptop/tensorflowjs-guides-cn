@@ -104,15 +104,20 @@ function loss(predictions, labels) {
 
 TensorFlow.js提供了执行SGD的便利功能, 这样您就不必担心自己执行所有这些数学运算. tf.train.sgd 将所需的学习率作为输入, 并返回一个SGDOptimizer对象,可以调用它来优化损失函数的值.
 
-The learning rate controls how big the model's adjustments will be when improving its predictions. A low learning rate will make the learning process run more slowly (more training iterations needed to learn good coefficients), while a high learning rate will speed up learning but might result in the model oscillating around the right values, always overcorrecting.
+学习率控制模型在改进预测时的调整量. 低学习率将使学习过程运行得更慢(学习好系数需要更多的训练迭代), 然较高的学习速度会加快学习速度，但可能导致模型围绕正确的值振荡, 总是过度矫正.
 
-The following code constructs an SGD optimizer with a learning rate of 0.5:
+以下代码构造了一个学习率为0.5的SGD优化器:
 
+```
 const learningRate = 0.5;
 const optimizer = tf.train.sgd(learningRate);
-Define the Training Loop
-Now that we've defined our loss function and optimizer, we can build a training loop, which iteratively performs SGD to refine our model's coefficients to minimize loss (MSE). Here's what our loop looks like:
+```
 
+## 定义训练循环
+
+现在我们已经定义了我们的损失函数和优化器, 我们可以建立一个训练循环, 迭代地执行SGD以优化我们的模型系数以最小化损失（MSE）. 我们的循环看起来像:
+
+```
 function train(xs, ys, numIterations = 75) {
 
   const learningRate = 0.5;
@@ -125,15 +130,23 @@ function train(xs, ys, numIterations = 75) {
     });
   }
 }
-Let's take a closer look at the code, step by step. First, we define our training function to take the x and y values of our dataset, as well as a specified number of iterations, as input:
+```
 
+让我们仔细看看代码, 一步步。首先，我们定义训练函数，将数据集的x和y值以及指定的迭代次数作为输入:
+
+```
 function train(xs, ys, numIterations) {
 ...
 }
-Next, we define the learning rate and SGD optimizer as discussed in the previous section:
+```
 
+接下来，我们定义学习速率和SGD优化器，如上一节所述：
+
+```
 const learningRate = 0.5;
 const optimizer = tf.train.sgd(learningRate);
+```
+
 Finally, we set up a for loop that runs numIterations training iterations. In each iteration, we invoke minimize on the optimizer, which is where the magic happens:
 
 for (let iter = 0; iter < numIterations; iter++) {
