@@ -75,11 +75,11 @@ function predict(x) {
 
 ## 步骤 3: 训练模型
 
-我们的最后一步是训练模型以学习系数的良好值.为了训练我们的模型，我们需要定义三件事:
+* 我们的最后一步是训练模型以学习系数的良好值.为了训练我们的模型，我们需要定义三件事:
 
-A loss function, which measures how well a given polynomial fits the data. The lower the loss value, the better the polynomial fits the data.
+* 损失函数,它测量给定多项式与数据的拟合程度.损失值越低,多项式拟合数据越好.
 
-An optimizer, which implements an algorithm for revising our coefficient values based on the output of the loss function. The optimizer's goal is to minimize the output value of the loss function.
+* 优化器, 它实现了一种算法，用于根据损失函数的输出修改我们的系数值. 优化器的目标是最小化损失函数的输出值.
 
 A training loop, which will iteratively run the optimizer to minimize loss.
 
