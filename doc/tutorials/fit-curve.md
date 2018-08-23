@@ -12,7 +12,6 @@
 要在本地运行代码，需要安装以下依赖项:
 
 Node.js version 8.9 or higher
-
 Yarn or NPM CLI
 
 这些说明使用Yarn，但是如果您熟悉NPM CLI并且更喜欢使用它，那么它仍然可以使用.
