@@ -8,7 +8,7 @@
 
 ## 运行代码
 
-本教程重点介绍用于构建模型和其学习率的TensorFlow.js代码.可以在[此处](https://github.com/tensorflow/tfjs-examples/tree/master/polynomial-regression-core)找到本教程的完整代码（包括数据生成和图表绘图代码）.
+本教程重点介绍用于构建模型和其系数的TensorFlow.js代码.可以在[此处](https://github.com/tensorflow/tfjs-examples/tree/master/polynomial-regression-core)找到本教程的完整代码（包括数据生成和图表绘图代码）.
 
 要在本地运行代码，需要安装以下依赖项:
 
@@ -31,23 +31,31 @@ $ yarn watch
 
 ![avatar](../../img/fit_curve_data.png)
 
-Input data scatterplot. Data approximates a cubic function with a local minimum around (-0.6, 0) and a local maximum around (0.4, 1)
-This data was generated using a cubic function of the format y = ax3 + bx2 + cx + d.
+该数据是使用三次函数
+<em>y</em> = <em>a</em>x<sup>3</sup> + <em>b</em>x<sup>2</sup> + <em>c</em>x + <em>d</em>
+的的格式生成.
 
-Our task is to learn the coefficients of this function: the values of a, b, c, and d that best fit the data. Let's take a look at how we might learn those values using TensorFlow.js operations.
+我们的任务是学习这个函数的系数: 最适合数据的a，b，c和d的值.让我们看一下如何使用TensorFlow.js操作学习这些值.
 
-Step 1: Set up Variables
-First, let's create some variables to hold our current best estimate of these values at each step of model training. To start, we'll assign each of these variables a random number:
+## 步骤1: 设置变量
 
+首先，让我们创建一些变量来保持我们在模型训练的每个步骤中对这些值的当前最佳估计. 首先，我们将为每个变量分配一个随机数:
+
+```
 const a = tf.variable(tf.scalar(Math.random()));
 const b = tf.variable(tf.scalar(Math.random()));
 const c = tf.variable(tf.scalar(Math.random()));
 const d = tf.variable(tf.scalar(Math.random()));
-Step 2: Build a Model
-We can represent our polynomial function y = ax3 + bx2 + cx + d in TensorFlow.js by chaining a series of mathematical operations: addition (add), multiplication (mul), and exponentiation (pow and square).
+```
 
-The following code constructs a predict function that takes x as input and returns y:
+## 步骤2: 构建一个模型
 
+我们可以通过在TensorFlow.js中使用一系列的链式操作加法(add),乘法(mul)和幂(pow和square)来表示我们的多项式函数
+<em>y</em> = <em>a</em>x<sup>3</sup> + <em>b</em>x<sup>2</sup> + <em>c</em>x + <em>d</em>.
+
+以下代码构造一个预测函数，它将x作为输入并返回y:
+
+```
 function predict(x) {
   // y = a * x ^ 3 + b * x ^ 2 + c * x + d
   return tf.tidy(() => {
@@ -57,13 +65,17 @@ function predict(x) {
       .add(d); // + d
   });
 }
-Let's go ahead and plot our polynomial function using the random values for a, b, c, and d that we set in Step 1. Our plot will likely look something like this:
+```
 
-Cubic function that poorly fits the data in the previous graph. The function hovers far above the data from x=-1.0 to x=0, and then zooms upward from x=0.2 to x=1.0, while the data points move downward.
-Because we started with random values, our function is likely a very poor fit for the data set. The model has yet to learn better values for the coefficients.
+让我们继续使用我们在步骤1中设置的a，b，c和d的随机值绘制我们的多项式函数。我们的图可能看起来像这样:
 
-Step 3: Train the Model
-Our final step is to train the model to learn good values for the coefficients. To train our model, we need to define three things:
+![avatar](../../img/fit_curve_random.png)
+
+因为我们从随机值开始，所以我们的函数很可能不适合数据集.该模型尚未学习更好的系数值.
+
+## 步骤 3: 训练模型
+
+我们的最后一步是训练模型以学习系数的良好值.为了训练我们的模型，我们需要定义三件事:
 
 A loss function, which measures how well a given polynomial fits the data. The lower the loss value, the better the polynomial fits the data.
 
