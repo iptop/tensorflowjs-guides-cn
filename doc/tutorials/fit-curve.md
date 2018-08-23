@@ -147,19 +147,22 @@ const learningRate = 0.5;
 const optimizer = tf.train.sgd(learningRate);
 ```
 
-Finally, we set up a for loop that runs numIterations training iterations. In each iteration, we invoke minimize on the optimizer, which is where the magic happens:
+最后，我们设置了一个运行numIterations次训练迭代的for循环. 在每次迭代中，我们在优化器上调用minimize，这是魔术发生的地方:
 
+```
 for (let iter = 0; iter < numIterations; iter++) {
   optimizer.minimize(() => {
     const predsYs = predict(xs);
     return loss(predsYs, ys);
   });
 }
-minimize takes a function that does two things:
+```
 
-It predicts y values (predYs) for all the x values using the predict model function we defined earlier in Step 2.
+minimize需要一个能完成两件事的函数:
 
-It returns the mean squared error loss for those predictions using the loss function we defined earlier in Define the Loss Function.
+ 1. It predicts y values (predYs) for all the x values using the predict model function we defined earlier in Step 2.
+ 
+ 2. It returns the mean squared error loss for those predictions using the loss function we defined earlier in Define the Loss Function.
 
 minimize then automatically adjusts any Variables used by this function (here, the coefficients a, b, c, and d) in order to minimize the return value (our loss).
 
