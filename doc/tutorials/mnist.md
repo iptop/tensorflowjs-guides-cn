@@ -9,30 +9,40 @@
 * [TensorFlow.js中的核心概念](./core-concepts.md)
 * [训练第一步：拟合曲线到合成数据](./fit-curve.md)
 
-## Running the Code
+## 运行代码
 
-The full code for this tutorial can be found in the tfjs-examples/mnist directory in the TensorFlow.js examples repository.
+可以在 
+[TensorFlow.js examples](https://github.com/tensorflow/tfjs-examples/tree/master/mnist) 
+仓库的 [tfjs-examples/mnist](https://github.com/tensorflow/tfjs-examples/tree/master/mnist) 
+目录中找到本教程的完整代码.
 
-To run the code locally, you need the following dependencies installed:
+要在本地运行代码，您需要安装以下依赖项:
 
-Node.js version 8.9 or higher
-Yarn or NPM CLI
-These instructions use Yarn, but if you are familiar with NPM CLI and prefer to use that instead it will still work.
+* Node.js version 8.9 or higher
 
-You can run the code for the example by cloning the repo and building the demo:
+* Yarn or NPM CLI
 
+这些说明使用Yarn，但是如果您熟悉NPM CLI并且更喜欢使用它，那么它仍然可以使用。
+
+您可以通过克隆仓库并构建演示来运行示例代码:
+
+```
 $ git clone https://github.com/tensorflow/tfjs-examples
 $ cd tfjs-examples/mnist
 $ yarn
 $ yarn watch
-The tfjs-examples/mnist directory above is completely standalone, so you can copy it to start your own project.
+```
+上面的tfjs-examples/mnist 目录是完全独立的，因此您可以复制它以启动您自己的项目。
 
-NOTE: The difference between this tutorial's code and the tfjs-examples/mnist-core example is that here we use TensorFlow.js's higher-level APIs (Model, Layers) to construct the model, whereas mnist-core uses lower-level linear algebra ops to build a neural network.
+**注**: 本教程的代码和 tfjs-examples/mnist-core 中的示例之间的区别是，在这里我们使用 TensorFlow.js 的高级API（Model，Layer）来构建模型，而 mnist-core 采用底层的线性代数操作来建立一个神经网络。
 
-Data
-We will use the MNIST handwriting dataset for this tutorial. The handwritten MNIST digits we will learn to classify look like this:
+## 数据
 
-mnist 4 mnist 3 mnist 8
+我们将在本教程中使用[MNIST手写数据集](http://yann.lecun.com/exdb/mnist/)。我们将学习分类的手写MNIST数字如下所示：
+
+![avatar](../../img/mnist_3.png)
+![avatar](../../img/mnist_4.png)
+![avatar](../../img/mnist_8.png)
 
 To preprocess our data, we've written data.js, which contains the class MnistData that fetches random batches of MNIST images from a hosted version of the MNIST dataset we provide for convenience.
 
