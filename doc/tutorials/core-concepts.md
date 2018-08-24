@@ -12,6 +12,8 @@ TensorFlow.js中的核心是张量: 一组数值，形状为一个或多个维�
 Tensor的主要构造函数是tf.tensor函数：
 
 ```
+`javascript
+`
 // 2x3 Tensor
 const shape = [2, 3]; // 2 rows, 3 columns
 const a = tf.tensor([1.0, 2.0, 3.0, 10.0, 20.0, 30.0], shape);
