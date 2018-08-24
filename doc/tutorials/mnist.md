@@ -44,15 +44,16 @@ $ yarn watch
 ![avatar](../../img/mnist_4.png)
 ![avatar](../../img/mnist_8.png)
 
-To preprocess our data, we've written data.js, which contains the class MnistData that fetches random batches of MNIST images from a hosted version of the MNIST dataset we provide for convenience.
+为了预处理我们的数据，我们编写了data.js，其中包含MnistData类，它从我们提供的MNIST数据集的托管版本中获取随机批次的MNIST图像。
 
-MnistData splits the entire dataset into training data and test data. When we train the model, the classifier will see only the training set. When we evaluate the model, we'll use only the data in the test set, which the model has not yet seen, to see how well the model's predictions generalize to brand-new data.
+MnistData将整个数据集拆分为训练数据和测试数据. 当我们训练模型时, 分类器只能看到训练集. 当我们评估模型时，我们将仅使用模型尚未见到的测试集中的数据， 看模型的预测如何推广到全新的数据.
 
-MnistData has two public methods:
+MnistData有两个公有方法：
 
-nextTrainBatch(batchSize): returns a random batch of images and their labels from the training set
-nextTestBatch(batchSize): returns a batch of images and their labels from the test set
-NOTE: When training the MNIST classifier, it's important to randomly shuffle the data, so the model's predictions aren't affected by the order in which we feed it images. For example, if we were to feed the model all the 1 digits first, during this phase of training, the model might learn to simply predict 1 (since this minimizes the loss). If we were to then feed the model only 2s, it might simply switch to predicting only 2 and never predict a 1 (since, again, this would minimize loss for the new set of images). The model would never learn to make an accurate prediction over a representative sample of digits.
+* nextTrainBatch(batchSize)：从训练集中随机返回一批图像及其标签
+* nextTestBatch(batchSize)：从测试集中返回一批图像及其标签
+
+**注**: 在训练MNIST分类器时, 打乱数据是非常重要的, 这样可以避免模型的预测受到图像的顺序的影响. 例如，如果我们首先为模型提供所有数字1，在此阶段的训练期间，模型可能会学会简单地预测1 (since this minimizes the loss). If we were to then feed the model only 2s, it might simply switch to predicting only 2 and never predict a 1 (since, again, this would minimize loss for the new set of images). The model would never learn to make an accurate prediction over a representative sample of digits.
 
 Building the Model
 In this section, we'll build a convolutional image classifier model. To do so, we'll use a Sequential model (the simplest type of model), in which tensors are consecutively passed from one layer to the next.
