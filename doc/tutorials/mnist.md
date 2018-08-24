@@ -1,12 +1,16 @@
-Training on Images: Recognizing Handwritten Digits with a Convolutional Neural Network
-In this tutorial, we'll build a TensorFlow.js model to classify handwritten digits with a convolutional neural network. First, we'll train the classifier by having it “look” at thousands of handwritten digit images and their labels. Then we'll evaluate the classifier's accuracy using test data that the model has never seen.
+## 图像训练: 用卷积神经网络识别手写数字
 
-Prerequisites
-This tutorial assumes familiarity with the fundamental building blocks of TensorFlow.js (tensors, variables, and ops), as well as the concepts of optimization and loss. For more background on these topics, we recommend completing the following tutorials before this tutorial:
+在本教程中，我们将构建一个TensorFlow.js模型，用卷积神经网络对手写数字进行分类. 首先，我们将通过“查看”成千上万的手写数字图像及其标签来训练分类器. 然后我们将使用模型从未见过的测试数据来评估分类器的准确性.
 
-Core Concepts in TensorFlow.js
-Training First Steps: Fitting a Curve to Synthetic Data
-Running the Code
+## 先决条件
+
+本教程假设您熟悉TensorFlow.js的基础构建模块 (张量,变量,和操作),以及优化器和损失的概念. 有关这些主题的更多背景信息, 我们建议在本教程之前完成以下教程:
+
+* [TensorFlow.js中的核心概念](./tutorials/core-concepts.md)
+* [训练第一步：拟合曲线到合成数据](./tutorials/fit-curve.md)
+
+## Running the Code
+
 The full code for this tutorial can be found in the tfjs-examples/mnist directory in the TensorFlow.js examples repository.
 
 To run the code locally, you need the following dependencies installed:
