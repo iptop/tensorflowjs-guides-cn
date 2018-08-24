@@ -6,8 +6,8 @@
 
 本教程假设您熟悉TensorFlow.js的基础构建模块 (张量,变量,和操作),以及优化器和损失的概念. 有关这些主题的更多背景信息, 我们建议在本教程之前完成以下教程:
 
-* [TensorFlow.js中的核心概念](./tutorials/core-concepts.md)
-* [训练第一步：拟合曲线到合成数据](./tutorials/fit-curve.md)
+* [TensorFlow.js中的核心概念](./core-concepts.md)
+* [训练第一步：拟合曲线到合成数据](./fit-curve.md)
 
 ## Running the Code
 
