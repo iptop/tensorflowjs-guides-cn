@@ -173,27 +173,34 @@ const optimizer = tf.train.sgd(LEARNING_RATE);
 
 对于我们的损失函数，我们将使用交叉熵（categoricalCrossentropy），它通常用于优化分类任务。categoricalCrossentropy测量模型的最后一层生成的概率分布与我们的标签给出的概率分布之间的误差，该分布将是正确类标签中的1（100％）分布。例如，给定数字7的示例的以下标签和预测值:
 
-| class     |   0   |   1   |   2   |   3   |   4   |   5   |   6   |   7   |   8   |   9   |  
-|-----------|------:|------:|------:|------:|------:|------:|------:|------:|------:|------:|
-|label      |  0   |   0   |  0  | 0 | 0 | 0 | 0 | 1 | 0 | 0 |  
-| prediction| .1 | .01 | .01 | .01 | .02 | .01 | .01 | .06 | .03 | .02 |  
+|class     |   0   |   1   |   2   |   3   |   4   |   5   |   6   |   7   |   8   |   9   |  
+|----------|------:|------:|------:|------:|------:|------:|------:|------:|------:|------:|
+|label     |   0   |   0   |   0   |   0   |   0   |   0   |   0   |   1   |   0   |   0   |  
+|prediction|   .1  |   .01 |   .01 |   .01 |   .02 |   .01 |   .01 |   .06 |   .03 |   .02 |  
 
-categoricalCrossentropy gives a lower loss value if the prediction is a high probability that the digit is 7, and a higher loss value if the prediction is a low probability of 7. During training, the model will update its internal parameters to minimize categoricalCrossentropy over the whole dataset.
+如果预测的结果是数字7的概率很高，那么categoricalCrossentropy会给出一个较低的损失值，而如果7的概率很低，那么categoricalCrossentropy的损失就会更高。在训练过程中，模型会更新它的内部参数以最小化在整个数据集上的categoricalCrossentropy.
 
-Defining the Evaluation Metric
-For our evaluation metric, we'll use accuracy, which measures the percentage of correct predictions out of all predictions.
+## 定义评估指标
 
-Compiling the Model
-To compile the model, we pass it a configuration object with our optimizer, loss function, and a list of evaluation metrics (here, just 'accuracy'):
+对于我们的评估指标，我们将使用准确度，该准确度衡量所有预测中正确预测的百分比.
 
+## 编译模型
+
+编译模型, 为了编译模型，我们传入一个由优化器，损失函数和一系列评估指标（这里只是'精度'）组成的配置对象:
+
+```
 model.compile({
   optimizer: optimizer,
   loss: 'categoricalCrossentropy',
   metrics: ['accuracy'],
 });
-Configuring Batch Size
-Before we begin training, we need to define a few more parameters related to batch size:
+```
 
+## 配置批量大小
+
+在我们开始培训之前，我们需要定义一些与批量大小相关的参数:
+
+```
 // How many examples the model should "see" before making a parameter update.
 const BATCH_SIZE = 64;
 // How many batches to train the model for.
@@ -204,20 +211,25 @@ const TRAIN_BATCHES = 100;
 // reasons we'll use a subset.
 const TEST_BATCH_SIZE = 1000;
 const TEST_ITERATION_FREQUENCY = 5;
-More About Batching and Batch Size
-To take full advantage of the GPU's ability to parallelize computation, we want to batch multiple inputs together and feed them through the network using a single feed-forward call.
+```
 
-Another reason we batch our computation is that during optimization, we update internal parameters (taking a step) only after averaging gradients from several examples. This helps us avoid taking a step in the wrong direction because of an outlier example (e.g., a mislabeled digit).
+**有关批处理和批处理大小的更多信息**
 
-When batching input data, we introduce a tensor of rank D+1, where D is the dimensionality of a single input.
+为了充分利用GPU并行计算的能力，我们希望将多个输入一起批处理，并使用单个前馈调用通过网络提供它们.
 
-As discussed earlier, the dimensionality of a single image in our MNIST data set is [28, 28, 1]. When we set a BATCH_SIZE of 64, we're batching 64 images at a time, which means the actual shape of our data is [64, 28, 28, 1] (the batch is always the outermost dimension).
+我们对计算进行批处理的另一个原因是，在优化期间，我们仅在对几个示例的梯度进行平均后才更新内部参数（采取步骤）。这有助于我们避免因错误的方向向前迈出一步（例如，错误标记的数字）.
 
-NOTE:* Recall that the inputShape in the config of our first conv2d did not specify the batch size (64). Configs are written to be batch-size-agnostic, so that they are able to accept batches of arbitrary size.
+当批量输入数据时，我们引入秩D + 1的张量，其中D是单个输入的维数.
 
-Coding the Training Loop
-Here is the code for the training loop:
+如前所述，我们的MNIST数据集中单个图像的维度为[28,28,1]。当我们将BATCH_SIZE设置为64时，我们一次批量处理64个图像，这意味着我们数据的实际形状为[64,28,28,1]（批次始终是最外层维度）.
 
+**注**:* 回想一下，我们第一个conv2d配置中的inputShape没有指定批量大小（64）。配置编写为批量大小不可知，因此它们能够接受任意大小的批量.
+
+## 编码训练循环
+
+以下是训练循环的代码:
+
+```
 for (let i = 0; i < TRAIN_BATCHES; i++) {
   const batch = data.nextTrainBatch(BATCH_SIZE);
  
@@ -247,11 +259,17 @@ for (let i = 0; i < TRAIN_BATCHES; i++) {
 
   // ... plotting code ...
 }
-Let's break the code down. First, we fetch a batch of training examples. Recall from above that we batch examples to take advantage of GPU parallelization and to average evidence from many examples before making a parameter update:
+```
 
+让我们分析代码。 首先，我们获取一批训练样本。 回想一下上面说的，我们利用GPU并行化批量处理样本，在对大量样本进行平均后才更新参数:
+
+```
 const batch = data.nextTrainBatch(BATCH_SIZE);
-Every 5 steps (our TEST_ITERATION_FREQUENCY, we construct validationData, an array of two elements containing a batch of MNIST images from the test set and their corresponding labels. We'll use this data to evaluate the accuracy of the model:
+```
 
+每5个step（TEST_ITERATION_FREQUENCY），我们构造一次validationData，这是一个包含一批来自MNIST测试集的图像及其相应标签这两个元素的数组，我们将使用这些数据来评估模型的准确性:
+
+```
 if (i % TEST_ITERATION_FREQUENCY === 0) {
   testBatch = data.nextTestBatch(TEST_BATCH_SIZE);
   validationData = [
@@ -259,33 +277,42 @@ if (i % TEST_ITERATION_FREQUENCY === 0) {
     testBatch.labels
   ];
 }
-model.fit is where the model is trained and parameters actually get updated.
+```
+model.fit是模型训练和参数实际更新的地方.
 
-NOTE: Calling model.fit() once on the whole dataset will result in uploading the whole dataset to the GPU, which could freeze the application. To avoid uploading too much data to the GPU, we recommend calling model.fit() inside a for loop, passing a single batch of data at a time, as shown below:
+**注**: 在整个数据集上执行一次model.fit会导致将整个数据集上传到GPU，这可能会使应用程序死机。 为避免向GPU上传太多数据，我们建议在for循环中调用model.fit()，一次传递一批数据，如下所示:
 
+```
 // The entire dataset doesn't fit into memory so we call fit repeatedly
 // with batches.
   const history = await model.fit(
       batch.xs.reshape([BATCH_SIZE, 28, 28, 1]), batch.labels,
       {batchSize: BATCH_SIZE, validationData: validationData, epochs: 1});
-Let's break down the arguments again:
+```
 
-x. Our input image data. Remember that we are feeding examples in batches so we must tell the fit function how large our batch is. MnistData.nextTrainBatch returns images with shape [BATCH_SIZE, 784]—all the data for the image in a 1-D vector of length 784 (28 * 28). However, our model expects image data in the shape [BATCH_SIZE, 28, 28, 1], so we reshape accordingly.
+我们再来分析一下这些参数:
 
-y. Our labels; the correct digit classifications for each image.
+x. 输入图像数据。请记住，我们分批量提供样本，因此我们必须告诉fit函数batch有多大。 MnistData.nextTrainBatch返回形状为[BATCH_SIZE，784]的图像 —— 所有的图像数据是长度为784（28 * 28）的一维向量。但是，我们的模型预期图像数据的形状为[BATCH_SIZE，28,28,1]，因此我们需要使用reshape函数.
 
-batchSize. How many images to include in each training batch. Earlier we set a BATCH_SIZE of 64 to use here.
+y. 我们的标签;每个图像的正确数字分类.
 
-validationData. The validation set we construct every TEST_ITERATION_FREQUENCY (here, 5) batches. This data is in the shape [TEST_BATCH_SIZE, 28, 28, 1]. Earlier, we set a TEST_BATCH_SIZE of 1000. Our evaluation metric (accuracy) will be computed over this data set.
+batchSize. 每个训练batch中包含多少个图像。之前我们在这里设置的BATCH_SIZE是64.
 
-epochs. Number of training runs to perform on a batch. Since we are iteratively feeding batches to fit, we only want it to train from this batch a single time.
+validationData. 每隔TEST_ITERATION_FREQUENCY（这里是5）个Batch，我们构建的验证集。该数据的形状为[TEST_BATCH_SIZE，28,28,1]。之前，我们设置了1000的TEST_BATCH_SIZE。我们的评估度量（准确度）将在此数据集上计算.
 
-Each time we call fit, it returns a rich object that contains logs of our metrics, which we store in history. We extract our loss and accuracy for each training iteration, so we can plot them on a graph:
+epochs.批量执行的训练次数。由于我们分批把数据馈送到fit函数，所以我们希望它每次仅从这个batch上进行训练.
 
+每次调用fit的时候，它会返回一个包含指标日志的对象，我们把它存储在history。我们提取每次训练迭代的损失和准确度，以便将它们绘制在图上:
+
+```
 const loss = history.history.loss[0];
 const accuracy = history.history.acc[0];
-See the Results!
-If you run the full code, you should see output like this:
+```
+
+## See the Results!
+
+如果您运行完整代码，您应该看到这样的输出:
+![avatar](../../img/mnist_learned.png) 
 
 Two plots. The first plot shows loss vs. training batch, with loss trending downward from batch 0 to batch 100. The second plot shows accuracy vs. test batch, with accuracy trending upward from batch 0 to batch 100
 It looks like the model is predicting the right digit for most of the images. Great work!
