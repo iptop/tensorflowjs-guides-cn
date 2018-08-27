@@ -53,21 +53,26 @@ MnistData有两个公有方法：
 * nextTrainBatch(batchSize)：从训练集中随机返回一批图像及其标签
 * nextTestBatch(batchSize)：从测试集中返回一批图像及其标签
 
-**注**: 在训练MNIST分类器时, 打乱数据是非常重要的, 这样可以避免模型的预测受到图像的顺序的影响. 例如，如果我们首先为模型提供所有数字1，在此阶段的训练期间，模型可能会学会简单地预测1 (since this minimizes the loss). If we were to then feed the model only 2s, it might simply switch to predicting only 2 and never predict a 1 (since, again, this would minimize loss for the new set of images). The model would never learn to make an accurate prediction over a representative sample of digits.
+**注**: 在训练MNIST分类器时, 打乱数据是非常重要的, 这样可以避免模型的预测受到图像的顺序的影响. 例如，如果我们首先为模型提供所有数字1，在此阶段的训练期间，模型可能会学会简单地预测1 (因为这可以减少损失). 而如果我们每次训练时都提供的是2, 那么它也会简单切换为预测2并且永远不会预测1 (同样的，也是因为这样可以减少损失函数). 如果每次都提供这样典型的、有代表性的数字，那么这个模型将永远也学不会做出一个精确的预测.
 
-Building the Model
-In this section, we'll build a convolutional image classifier model. To do so, we'll use a Sequential model (the simplest type of model), in which tensors are consecutively passed from one layer to the next.
+## 构建模型
 
-First, let's instantiate our Sequential model with tf.sequential:
+在本节中，我们将构建一个卷积图像分类器模型. 为此，我们将使用Sequential模型 (模型中最为简单的一个类型), 其中张量从一层连续传递到下一层.
 
+首先，让我们用tf.sequential实例化我们的Sequential模型:
+
+```
 const model = tf.sequential();
 Now that we've created a model, let's add layers to it.
+```
 
-Adding the First Layer
-The first layer we’ll add is a two-dimensional convolutional layer. Convolutions slide a filter window over an image to learn transformations that are spatially invariant (that is, patterns or objects in different parts of the image will be treated the same way). For more information about convolutions, see this article.
+## 添加第一层
 
-We can create our 2-D convolutional layer using tf.layers.conv2d, which accepts a configuration object that defines the layer's structure:
+我们要添加的第一层是二维卷积层. 卷积在图像上滑动过滤窗口以学习空间不变的变换 (也就是说，图像不同部分的图案或对象将以相同的方式处理). 有关卷积的更多信息, 请看[这篇文章](http://colah.github.io/posts/2014-07-Understanding-Convolutions/).
 
+我们可以使用tf.layers.conv2d创建我们的2-D卷积层，它接受一个定义图层结构的配置对象:
+
+```
 model.add(tf.layers.conv2d({
   inputShape: [28, 28, 1],
   kernelSize: 5,
@@ -76,38 +81,44 @@ model.add(tf.layers.conv2d({
   activation: 'relu',
   kernelInitializer: 'VarianceScaling'
 }));
-Let’s break down each argument in the configuration object:
+```
 
-inputShape. The shape of the data that will flow into the first layer of the model. In this case, our MNIST examples are 28x28-pixel black-and-white images. The canonical format for image data is [row, column, depth], so here we want to configure a shape of [28, 28, 1]—28 rows and columns for the number of pixels in each dimension, and a depth of 1 because our images have only 1 color channel:
+让我们分析配置对象中的每个参数:
 
-kernelSize. The size of the sliding convolutional filter windows to be applied to the input data. Here, we set a kernelSize of 5, which specifies a square, 5x5 convolutional window.
+inputShape.将流入模型第一层的数据形状.在这种情况下,我们的MNIST示例是28x28像素的黑白图像. 所以我们在这里配置的形状是[28,28,1]——每个维度有28rowX28column个像素，而depth为1是因为我们的图像只有1个颜色通道:
 
-filters. The number of filter windows of size kernelSize to apply to the input data. Here, we will apply 8 filters to the data.
+kernelSize. 应用于输入数据的滑动卷积滤波器窗口的大小。在这里，我们设置kernelSize为5，它表示一个5x5的正方形卷积窗口.
 
-strides. The "step size" of the sliding window—i.e., how many pixels the filter will shift each time it moves over the image. Here, we specify strides of 1, which means that the filter will slide over the image in steps of 1 pixel.
+filters. 要应用于输入数据的大小为kernelSize的过滤器窗口数。在这里，我们将对数据应用8个过滤器.
 
-activation. The activation function to apply to the data after the convolution is complete. In this case, we are applying a Rectified Linear Unit (ReLU) function, which is a very common activation function in ML models.
+strides. 滑动窗口的“步长” - 即每次在图像上移动时，滤波器将移动多少个像素。在这里，我们指定步幅为1，这意味着过滤器将以1像素为单位滑过图像.
 
-kernelInitializer. The method to use for randomly initializing the model weights, which is very important to training dynamics. We won’t go into the details of initialization here, but VarianceScaling (used here) is generally a good initializer choice.
+activation. 卷积完成后应用于数据的 激活函数。这里，我们使用了 Rectified Linear Unit (ReLU)函数，这是ML模型中非常常见的激活函数.
 
-Adding the Second Layer
-Let’s add a second layer to the model: a max pooling layer, which we'll create using tf.layers.maxPooling2d. This layer will downsample the result (also known as the activation) from the convolution by computing the maximum value for each sliding window:
+kernelInitializer. 用于随机初始化模型权重的方法，这对训练动力学非常重要。我们不会在这里讨论初始化的细节，但是VarianceScaling（这里使用）通常是一个很好的初始化器选择.
+
+## 添加第二层
+让我们在模型中添加第二层: 最大池化层, 我们将使用 tf.layers.maxPooling2d创建它。该层将通过计算每个滑动窗口的最大值来缩减卷积结果（即激活）的大小:
 
 model.add(tf.layers.maxPooling2d({
   poolSize: [2, 2],
   strides: [2, 2]
 }));
-Let’s break down the arguments:
 
-poolSize. The size of the sliding pooling windows to be applied to the input data. Here, we set a poolSize of [2,2], which means that the pooling layer will apply 2x2 windows to the input data.
+我们来分析一下这些参数:
 
-strides. The "step size" of the sliding pooling window—i.e., how many pixels the window will shift each time it moves over the input data. Here, we specify strides of [2, 2], which means that the filter will slide over the image in steps of 2 pixels in both horizontal and vertical directions.
+poolSize. 要应用于输入数据的滑动池窗口的大小。在这里，我们设置poolSize为[2,2]，这意味着池化层将2x2窗口应用于输入数据.
 
-NOTE: Since both poolSize and strides are 2x2, the pooling windows will be completely non-overlapping. This means the pooling layer will cut the size of the activation from the previous layer in half.
+strides. 滑动池窗口的“步长” - 即，每次窗口在输入数据上移动时窗口将移动多少像素。
+在这里，我们指定[2,2]的步幅，这意味着滤镜将在水平和垂直方向上以2像素的步长在图像上滑动.
 
-Adding the Remaining Layers
-Repeating layer structure is a common pattern in neural networks. Let's add a second convolutional layer, followed by another pooling layer to our model. Note that in our second convolutional layer, we're doubling the number of filters from 8 to 16. Also note that we don't specify an inputShape, as it can be inferred from the shape of the output from the previous layer:
+**注**: 由于poolSize和strides都是2×2，所以池窗口将完全不重叠。这意味着池化层会将前一层的激活图的大小减半.
 
+## 添加剩余层
+
+重复层结构是神经网络中的常见模式. 让我们添加第二个卷积层, 然后是我们模型的另一个池化层. 请注意，在我们的第二个卷积层中,我们将过滤器的数量从8增加到16.还要注意，我们没有指定inputShape,因为它可以从前一层的输出形状推断出来:
+
+```
 model.add(tf.layers.conv2d({
   kernelSize: 5,
   filters: 16,
@@ -120,21 +131,27 @@ model.add(tf.layers.maxPooling2d({
   poolSize: [2, 2],
   strides: [2, 2]
 }));
-Next, let's add a flatten layer to flatten the output of the previous layer to a vector:
+```
+接下来，我们添加一个 flatten层，将前一层的输出平铺到一个向量中:
 
+```
 model.add(tf.layers.flatten());
-Lastly, let's add a dense layer (also known as a fully connected layer), which will perform the final classification. Flattening the output of a convolution+pooling layer pair before a dense layer is another common pattern in neural networks:
+```
 
+最后，让我们添加一个 dense层（也称为全连接层），它将执行最终的分类。 在dense层前先对卷积+池化层的输出执行flatten也是神经网络中的另一种常见模式:
+
+```
 model.add(tf.layers.dense({
   units: 10,
   kernelInitializer: 'VarianceScaling',
   activation: 'softmax'
 }));
-Let’s break down the arguments passed to the dense layer.
+```
+我们来分析传递给dense层的参数.
 
-units. The size of the output activation. Since this is the final layer, and we’re doing a 10-class classification task (digits 0–9), we use 10 units here. (Sometimes units are referred to as the number of neurons, but we’ll avoid that terminology.)
+units. 输出激活的大小。由于这是最后一层，我们正在进行10级分类任务（数字0-9），我们在这里使用10个单位。（有时单位被称为神经元的数量，但我们将避免使用该术语。）
 
-kernelInitializer. We'll use the same VarianceScaling initialization strategy for the dense layer that we used for the convolutional layers.
+kernelInitializer. 我们将对用于卷积层的密集层使用相同的VarianceScaling初始化策略。
 
 activation. The activation function of the last layer for a classification task is usually softmax. Softmax normalizes our 10-dimensional output vector into a probability distribution, so that we have a probability for each of the 10 classes.
 
