@@ -314,12 +314,12 @@ const accuracy = history.history.acc[0];
 如果您运行完整代码，您应该看到这样的输出:
 ![avatar](../../img/mnist_learned.png) 
 
-Two plots. The first plot shows loss vs. training batch, with loss trending downward from batch 0 to batch 100. The second plot shows accuracy vs. test batch, with accuracy trending upward from batch 0 to batch 100
-It looks like the model is predicting the right digit for most of the images. Great work!
+看起来模型正在预测大多数图像的正确数字。做得好！
 
-Additional Resources
-For more on convolution, see Understanding Convolutions by Chris Olah.
+## 其他资源
 
-For more on loss, see Descending into ML in Machine Learning Crash Course for a more in-depth introduction to machine learning loss.
+* 有关卷积的更多信息，请参阅Chris Olah的 [Understanding Convolutions](http://colah.github.io/posts/2014-07-Understanding-Convolutions/) 。
 
-For more on gradient descent and SGD, see Reducing Loss in Machine Learning Crash Course.
+* 有关损失的更多信息，请参阅 [Machine Learning Crash Course](https://developers.google.com/machine-learning/crash-course/) 中的[Descending into ML](https://developers.google.com/machine-learning/crash-course/descending-into-ml/) ，以更深入地了解机器学习中的损失。
+
+* 有关梯度下降和SGD的更多信息，请参阅 [Machine Learning Crash Course](https://developers.google.com/machine-learning/crash-course/)中的 [Reducing Loss](https://developers.google.com/machine-learning/crash-course/reducing-loss/)。
